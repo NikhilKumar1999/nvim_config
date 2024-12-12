@@ -1,0 +1,12 @@
+vim.api.nvim_create_autocmd('Filetype',{
+pattern = {'*.cpp','*.h'},
+callback = function(args)
+vim.lsp.start({
+	name ='clangd',
+	cmd = {'clangd'},
+	root_dir = vim.fs.root(args.buf,function(name,path)
+		return name:match('compile_commands.json') ~= nil
+	end),})
+end,
+})
+
